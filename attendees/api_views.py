@@ -1,6 +1,27 @@
 from django.http import JsonResponse
 
+from events.api_views import ConferenceListEncoder
+from common.json import ModelEncoder
 from .models import Attendee
+
+
+class AttendeeListEncoder(ModelEncoder):
+    model = Attendee
+    properties = ["name"]
+
+
+class AttendeeDetailEncoder(ModelEncoder):
+    model = Attendee
+    properties = [
+        "email",
+        "name",
+        "company_name",
+        "created",
+        "conference",
+    ]
+    encoders = {
+        "conference": ConferenceListEncoder(),
+    }
 
 
 def api_list_attendees(request, conference_id):
@@ -23,7 +44,11 @@ def api_list_attendees(request, conference_id):
         ]
     }
     """
-    return JsonResponse({})
+    attendees = Attendee.objects.filter(conference=conference_id)
+    return JsonResponse(
+        {"attendees": attendees},
+        encoder=AttendeeListEncoder,
+    )
 
 
 def api_show_attendee(request, pk):
@@ -46,4 +71,9 @@ def api_show_attendee(request, pk):
         }
     }
     """
-    return JsonResponse({})
+    attendee = Attendee.objects.get(id=pk)
+    return JsonResponse(
+        attendee,
+        encoder=AttendeeDetailEncoder,
+        safe=False,
+    )
