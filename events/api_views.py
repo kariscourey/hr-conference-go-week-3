@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 import json
 
 from common.json import ModelEncoder
+from .acls import get_photo, get_weather_data
 from .models import Conference, Location, State
 
 
@@ -19,6 +20,7 @@ class LocationDetailEncoder(ModelEncoder):
         "room_count",
         "created",
         "updated",
+        "picture_url",
     ]
 
     def get_extra_data(self, o):
@@ -121,8 +123,12 @@ def api_show_conference(request, pk):
     }
     """
     conference = Conference.objects.get(id=pk)
+    weather = get_weather_data(
+        conference.location.city,
+        conference.location.state.abbreviation,
+    )
     return JsonResponse(
-        conference,
+        {"conference": conference, "weather": weather},
         encoder=ConferenceDetailEncoder,
         safe=False,
     )
@@ -157,7 +163,6 @@ def api_list_locations(request):
     else:
         content = json.loads(request.body)
 
-        # Get the State object and put it in the content dict
         try:
             state = State.objects.get(abbreviation=content["state"])
             content["state"] = state
@@ -167,6 +172,8 @@ def api_list_locations(request):
                 status=400,
             )
 
+        photo = get_photo(content["city"], content["state"].abbreviation)
+        content.update(photo)
         location = Location.objects.create(**content)
         return JsonResponse(
             location,
