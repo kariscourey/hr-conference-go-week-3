@@ -48,4 +48,7 @@ def get_photo(city, state):
     url = "https://api.pexels.com/v1/search"
     response = requests.get(url, params=params, headers=headers)
     content = json.loads(response.content)
-    return {"picture_url": content["photos"][0]["src"]["original"]}
+    try:
+        return {"picture_url": content["photos"][0]["src"]["original"]}
+    except (KeyError, IndexError):
+        return {"picture_url": None}
