@@ -39,7 +39,6 @@ AUTH_USER_MODEL = "accounts.User"
 
 INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
-    "attendees.apps.AttendeesConfig",
     "events.apps.EventsConfig",
     "presentations.apps.PresentationsConfig",
     "django.contrib.admin",
