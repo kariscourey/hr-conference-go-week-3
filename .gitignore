@@ -1,4 +1,6 @@
 events/keys.py
+database/data/*
+maildir/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -12,7 +12,7 @@ class Status(models.Model):
     """
 
     id = models.PositiveSmallIntegerField(primary_key=True)
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return self.name

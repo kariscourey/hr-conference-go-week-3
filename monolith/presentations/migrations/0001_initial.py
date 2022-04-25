@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Status',
             fields=[
                 ('id', models.PositiveSmallIntegerField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=10)),
+                ('name', models.CharField(max_length=10, unique=True)),
             ],
             options={
                 'verbose_name_plural': 'statuses',

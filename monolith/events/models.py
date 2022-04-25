@@ -12,8 +12,8 @@ class State(models.Model):
     """
 
     id = models.PositiveIntegerField(primary_key=True)
-    name = models.CharField(max_length=20)
-    abbreviation = models.CharField(max_length=2)
+    name = models.CharField(max_length=40)
+    abbreviation = models.CharField(max_length=2, unique=True)
 
     def __str__(self):
         return f"{self.abbreviation}"
