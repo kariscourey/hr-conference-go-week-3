@@ -1,7 +1,9 @@
 import json
 import requests
+import os
 
-from .keys import PEXELS_API_KEY, OPEN_WEATHER_API_KEY
+PEXELS_API_KEY = os.environ["PEXELS_API_KEY"]
+OPEN_WEATHER_API_KEY = os.environ["OPEN_WEATHER_API_KEY"]
 
 
 def get_weather_data(city, state):
