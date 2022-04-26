@@ -7,6 +7,7 @@ services:
     environment:
       DATABASE_URL: "postgres://monolith:password@database:5432/monolith"
       WAIT_HOSTS: database:5432, rabbitmq:5672
+      WAIT_TIMEOUT: 180
     ports:
       - "8000:8000"
     volumes:
@@ -28,6 +29,7 @@ services:
     environment:
       DATABASE_URL: "postgres://attendees:password@database:5432/attendees"
       WAIT_HOSTS: database:5432, rabbitmq:5672
+      WAIT_TIMEOUT: 180
   attendees_conference_info:
     build:
       context: ./attendees_microservice
@@ -50,6 +52,7 @@ services:
     environment:
       DATABASE_URL: "postgres://attendees:password@database:5432/attendees"
       WAIT_HOSTS: database:5432, rabbitmq:5672
+      WAIT_TIMEOUT: 180
   presentation_workflow:
     build:
       context: ./presentation_workflow
