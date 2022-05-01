@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   formTag.addEventListener('submit', async event => {
     event.preventDefault();
     const formData = new FormData(formTag);
-    const json = JSON.stringify(Object.fromEntries(formData.entries()));
+    const json = JSON.stringify(Object.fromEntries(formData));
 
     const conferenceId = selectTag.options[selectTag.selectedIndex].value;
     const locationUrl = `http://localhost:8000/api/conferences/${conferenceId}/presentations/`;

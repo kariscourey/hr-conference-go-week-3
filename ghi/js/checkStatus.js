@@ -1,9 +1,11 @@
 const payloadCookie = await cookieStore.get('jwt_access_payload');
 if (payloadCookie) {
-  console.log(payloadCookie);
-  const encodedPayload =  JSON.parse(payloadCookie.value);
+  let encodedPayload = payloadCookie.value;
+  try {
+    encodedPayload = JSON.parse(payloadCookie.value);
+  } catch (e) { /* Do nothing if it's not JSON encoded */ }
+
   const payload = JSON.parse(atob(encodedPayload));
-  console.log(payload);
   const permissions = payload.user.perms;
   if (permissions.includes("events.add_conference")) {
     const link = document.querySelector("[href='new-conference.html']");
