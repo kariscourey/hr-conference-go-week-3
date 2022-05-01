@@ -55,12 +55,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CRONJOBS = [
-    ("* * * * *", "attendees.poll.get_conferences"),
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3001",
+    "http://localhost:3000",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+CRONJOBS = [
+    ("* * * * *", "attendees.poll.get_conferences"),
 ]
 
 ROOT_URLCONF = "attendees_bc.urls"
